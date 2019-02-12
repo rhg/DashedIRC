@@ -3,7 +3,7 @@ CONFIG += v-play
 
 # uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 # for the remaining steps to build a custom Live Code Reload app see here: https://v-play.net/custom-code-reload-app/
-#CONFIG += v-play-live
+CONFIG += v-play-live
 
 # configure the bundle identifier for iOS
 PRODUCT_IDENTIFIER = cam.rhg135.dashedirc
@@ -49,3 +49,6 @@ win32 {
 macx {
     ICON = macx/app_icon.icns
 }
+
+DISTFILES += \
+    qml/pages/Start.qml
