@@ -52,4 +52,6 @@ macx {
 
 DISTFILES += \
     qml/pages/Start.qml \
-    qml/pages/Settings.qml
+    qml/pages/Settings.qml \
+    qml/pages/Servers.qml \
+    qml/pages/Server.qml

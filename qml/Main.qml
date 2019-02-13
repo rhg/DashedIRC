@@ -9,7 +9,12 @@ App {
     //  * Remove the V-Play Splash Screen or set a custom one (available with the Pro Licenses)
     //  * Add plugins to monetize, analyze & improve your apps (available with the Pro Licenses)
     //licenseKey: "<generate one from https://v-play.net/licenseKey>"
+    Component.onCompleted: updateServers()
     property var buffers: ({})
+    property var servers
+    function updateServers() {
+        servers = settings.getValue('servers') || []
+    }
     function addBuffer(name, model) {
         buffers[name] = model
         buffersChanged()
