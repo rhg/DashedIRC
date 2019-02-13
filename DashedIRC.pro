@@ -56,4 +56,5 @@ DISTFILES += \
     qml/pages/Settings.qml \
     qml/pages/Servers.qml \
     qml/pages/Server.qml \
-    android/src/com/rhg135/dashedirc/Colors.java
+    android/src/com/rhg135/dashedirc/Colors.java \
+    android/src/com/rhg135/dashedirc/Service.java

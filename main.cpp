@@ -1,9 +1,11 @@
 #include <QApplication>
+#include <QDebug>
 #include <VPApplication>
 
 #ifdef Q_OS_ANDROID
 #include <QAndroidJniObject>
 #include <QtAndroid>
+#include <QAndroidService>
 #endif
 
 #include <QQmlContext>
@@ -15,6 +17,13 @@
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_ANDROID
+    if (argc == 2) {
+        QAndroidService service(argc, argv);
+        qDebug() << "Running Service";
+        return service.exec();
+    }
+#endif
     QApplication app(argc, argv);
     VPApplication vplay;
 
@@ -29,6 +38,11 @@ int main(int argc, char *argv[])
                                                             "(Landroid/content/Context;)Ljava/lang/String;",
                                                             QtAndroid::androidActivity().object());
     engine.rootContext()->setContextProperty(QLatin1Literal("androidAccent"), accent.toString());
+
+    QAndroidJniObject::callStaticMethod<void>("com/rhg135/dashedirc/Service",
+                                              "startService",
+                                              "(Landroid/content/Context;)V",
+                                              QtAndroid::androidActivity().object());
 #endif
     // use this during development
     // for PUBLISHING, use the entry point below
