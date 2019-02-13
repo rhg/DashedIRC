@@ -34,6 +34,7 @@ SOURCES += main.cpp
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     OTHER_FILES += android/AndroidManifest.xml       android/build.gradle
+    QT += androidextras
 }
 
 ios {
@@ -54,4 +55,5 @@ DISTFILES += \
     qml/pages/Start.qml \
     qml/pages/Settings.qml \
     qml/pages/Servers.qml \
-    qml/pages/Server.qml
+    qml/pages/Server.qml \
+    android/src/com/rhg135/dashedirc/Colors.java

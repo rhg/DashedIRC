@@ -1,6 +1,12 @@
 #include <QApplication>
 #include <VPApplication>
 
+#ifdef Q_OS_ANDROID
+#include <QAndroidJniObject>
+#include <QtAndroid>
+#endif
+
+#include <QQmlContext>
 #include <QQmlApplicationEngine>
 
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
@@ -17,7 +23,13 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     vplay.initialize(&engine);
-
+#ifdef Q_OS_ANDROID
+    auto accent = QAndroidJniObject::callStaticObjectMethod("com/rhg135/dashedirc/Colors",
+                                                            "getAccent",
+                                                            "(Landroid/content/Context;)Ljava/lang/String;",
+                                                            QtAndroid::androidActivity().object());
+    engine.rootContext()->setContextProperty(QLatin1Literal("androidAccent"), accent.toString());
+#endif
     // use this during development
     // for PUBLISHING, use the entry point below
     // vplay.setMainQmlFileName(QStringLiteral("qml/Main.qml"));
