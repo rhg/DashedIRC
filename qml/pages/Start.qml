@@ -12,6 +12,11 @@ Page {
     }
     rightBarItem: NavigationBarRow {
         IconButtonBarItem {
+            title: qsTr('Connect')
+            showItem: showItemNever
+            onClicked: connect.open()
+        }
+        IconButtonBarItem {
             title: qsTr('Settings')
             onClicked: navigationStack.push(Qt.resolvedUrl('Settings.qml'))
             showItem: showItemNever
@@ -103,6 +108,20 @@ Page {
             }
             AppText {
                 text: 'Ricardo Gomez'
+            }
+        }
+    }
+    Dialog {
+        id: connect
+        title: qsTr('Connect')
+        negativeAction: false
+        positiveAction: false
+        onCanceled: connect.close()
+        AppListView {
+            anchors.fill: parent
+            model: servers
+            delegate: SimpleRow {
+                text: item
             }
         }
     }
