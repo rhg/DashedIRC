@@ -11,7 +11,7 @@ Page {
         servers.splice(i, 1)
         settings.setValue('servers', servers)
         settings.clearValue("server." + name)
-        updateServers()
+        serversChanged()
     }
     AppListView {
         anchors.fill: parent
