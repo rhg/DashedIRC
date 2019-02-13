@@ -51,4 +51,5 @@ macx {
 }
 
 DISTFILES += \
-    qml/pages/Start.qml
+    qml/pages/Start.qml \
+    qml/pages/Settings.qml

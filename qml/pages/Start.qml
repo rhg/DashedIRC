@@ -12,6 +12,11 @@ Page {
     }
     rightBarItem: NavigationBarRow {
         IconButtonBarItem {
+            title: qsTr('Settings')
+            onClicked: navigationStack.push(Qt.resolvedUrl('Settings.qml'))
+            showItem: showItemNever
+        }
+        IconButtonBarItem {
             title: qsTr("About")
             showItem: showItemNever
             onClicked: about.open()
@@ -72,7 +77,7 @@ Page {
             anchors.fill: parent
             model: getBufferNames()
             delegate: SimpleRow {
-                text: qsTr(item)
+                text: item
             }
         }
     }
