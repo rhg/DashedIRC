@@ -44,7 +44,7 @@ Page {
             Layout.fillWidth: true
             model: entries
             delegate: SimpleRow {
-                text: nick
+                text: nick || "?"
                 detailText: content
                 textItem.x: Theme.listItem.spacing + defaultAvatar.width
                 detailTextItem.x: textItem.x
@@ -58,7 +58,7 @@ Page {
                     y: x
                     AppText {
                         color: Theme.navigationBar.titleColor
-                        text: nick.substring(0, 2).toLocaleLowerCase()
+                        text: nick.substring(0, 2).toLocaleLowerCase() || "?"
                         anchors.centerIn: parent
                     }
                 }
@@ -122,6 +122,15 @@ Page {
             model: servers
             delegate: SimpleRow {
                 text: item
+                onSelected: {
+                    connect.close()
+                    if (typeof connectionManager !== 'undefined') {
+                        connectionManager.messageReceived.connect(function(id, msg) {
+                            entries.append(msg)
+                        })
+                        connectionManager.fromOpts(settings.getValue("server." + item))
+                    }
+                }
             }
         }
     }

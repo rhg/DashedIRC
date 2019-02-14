@@ -1,3 +1,5 @@
+include(../../../libcommuni/src/src.pri)
+
 # allows to add DEPLOYMENTFOLDERS and links to the V-Play library and QtCreator auto-completion
 CONFIG += v-play
 
@@ -29,12 +31,17 @@ RESOURCES += #    resources.qrc # uncomment for publishing
 
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    messages.cpp
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     OTHER_FILES += android/AndroidManifest.xml       android/build.gradle
-    QT += androidextras
+    QT += androidextras remoteobjects
+    REPC_SOURCE += service/connection.rep
+    REPC_REPLICA += service/connection.rep
+    SOURCES += service/service.cpp
+    HEADERS += service/connection.h
 }
 
 ios {
@@ -58,3 +65,6 @@ DISTFILES += \
     qml/pages/Server.qml \
     android/src/com/rhg135/dashedirc/Colors.java \
     android/src/com/rhg135/dashedirc/Service.java
+
+HEADERS += \
+    messages.h

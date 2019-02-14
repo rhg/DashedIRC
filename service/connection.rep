@@ -1,0 +1,4 @@
+class ConnectionManager {
+    SLOT(fromOpts(QVariantMap opts));
+    SIGNAL(messageReceived(int id, QVariantMap message));
+}

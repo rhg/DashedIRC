@@ -6,6 +6,8 @@
 #include <QAndroidJniObject>
 #include <QtAndroid>
 #include <QAndroidService>
+#include <QRemoteObjectNode>
+#include "rep_connection_replica.h"
 #endif
 
 #include <QQmlContext>
@@ -14,14 +16,13 @@
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 #include <VPLiveClient>
 
+int service(int argc, char** argv);
 
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_ANDROID
     if (argc == 2) {
-        QAndroidService service(argc, argv);
-        qDebug() << "Running Service";
-        return service.exec();
+        return service(argc, argv);
     }
 #endif
     QApplication app(argc, argv);
@@ -43,6 +44,12 @@ int main(int argc, char *argv[])
                                               "startService",
                                               "(Landroid/content/Context;)V",
                                               QtAndroid::androidActivity().object());
+    QRemoteObjectNode repNode;
+    repNode.connectToNode(QUrl(QStringLiteral("local:switch")));
+    QScopedPointer<ConnectionManagerReplica> ptr;
+    ptr.reset(repNode.acquire<ConnectionManagerReplica>());
+    engine.rootContext()->setContextProperty(QLatin1Literal("connectionManager"),
+                                             ptr.data());
 #endif
     // use this during development
     // for PUBLISHING, use the entry point below
