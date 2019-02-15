@@ -1,0 +1,16 @@
+#pragma once
+
+#include <QObject>
+#include <QVariantMap>
+#include <QUuid>
+
+class ConnectionManager : public QObject
+{
+     Q_OBJECT
+public:
+    explicit ConnectionManager(QObject *parent = nullptr);
+signals:
+    void messageReceived(const QUuid id, QString bufferName, QVariantMap opts);
+public slots:
+    void fromOpts(QVariantMap opts);
+};

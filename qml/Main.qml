@@ -21,17 +21,20 @@ App {
     function updateServers() {
         servers = settings.getValue('servers') || []
     }
-    function addBuffer(name, model) {
-        buffers[name] = model
+    function addBuffer(id, data) {
+        buffers[id] = data
         buffersChanged()
     }
-    function getBufferNames() {
+    function getBufferData() {
         var ret = []
         for (var k in buffers) {
-            ret.push(k)
+            ret.push(buffers[k])
         }
-        console.log(ret)
+        //console.log(JSON.stringify(ret))
         return ret
+    }
+    function getBuffer(bId) {
+        return buffers[bId]
     }
     NavigationStack {
         Start {}

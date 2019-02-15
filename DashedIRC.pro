@@ -32,7 +32,8 @@ RESOURCES += #    resources.qrc # uncomment for publishing
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    messages.cpp
+    messages.cpp \
+    connectionmanager.cpp
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
@@ -64,7 +65,9 @@ DISTFILES += \
     qml/pages/Servers.qml \
     qml/pages/Server.qml \
     android/src/com/rhg135/dashedirc/Colors.java \
-    android/src/com/rhg135/dashedirc/Service.java
+    android/src/com/rhg135/dashedirc/Service.java \
+    qml/models/Buffer.qml
 
 HEADERS += \
-    messages.h
+    messages.h \
+    ConnectionManager

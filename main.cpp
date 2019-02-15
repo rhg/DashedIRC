@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QDebug>
+#include <QUuid>
 #include <VPApplication>
 
 #ifdef Q_OS_ANDROID
@@ -8,6 +9,8 @@
 #include <QAndroidService>
 #include <QRemoteObjectNode>
 #include "rep_connection_replica.h"
+#else
+#include "ConnectionManager"
 #endif
 
 #include <QQmlContext>
@@ -50,7 +53,14 @@ int main(int argc, char *argv[])
     ptr.reset(repNode.acquire<ConnectionManagerReplica>());
     engine.rootContext()->setContextProperty(QLatin1Literal("connectionManager"),
                                              ptr.data());
+#else
+    ConnectionManager manager;
+    engine.rootContext()->setContextProperty(QLatin1Literal("connectionManager"),
+                                             &manager);
 #endif
+    auto coreId = QUuid::createUuid();
+    engine.rootContext()->setContextProperty(QLatin1Literal("coreUuid"),
+                                             coreId);
     // use this during development
     // for PUBLISHING, use the entry point below
     // vplay.setMainQmlFileName(QStringLiteral("qml/Main.qml"));

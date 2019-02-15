@@ -27,11 +27,29 @@ Page {
             onClicked: about.open()
         }
     }
+    function gotMessage(bId, bufferTitle, obj) {
+        if (obj.content) {
+            var data = getBuffer(bId)
+            if (!data) {
+                var c = Qt.createComponent("../models/Buffer.qml")
+                var model = c.createObject(connectionManager)
+                model.append(obj)
+                var o = {title: bufferTitle, model: model}
+                addBuffer(bId, o)
+            } else {
+                data.model.append(obj)
+            }
+        }
+    }
+    function show(item) {
+        title = item.title || '?'
+        spotlight.model = item.model
+    }
     ListModel {
         id: entries
         Component.onCompleted: {
             append({time: new Date(), nick: "Dashed IRC", content: qsTr("Welcome to Dashed IRC")})
-            addBuffer('Core', entries)
+            addBuffer(coreUuid, {title: qsTr('Core'), model: entries})
         }
     }
     ColumnLayout {
@@ -40,6 +58,7 @@ Page {
             x: drawer.x + drawer.width
         }
         AppListView {
+            id: spotlight
             Layout.fillHeight: true
             Layout.fillWidth: true
             model: entries
@@ -80,9 +99,10 @@ Page {
         AppListView {
             id: bufferList
             anchors.fill: parent
-            model: getBufferNames()
+            model: getBufferData()
             delegate: SimpleRow {
-                text: item
+                text: item.title || "?"
+                onSelected: show(item)
             }
         }
     }
@@ -125,9 +145,7 @@ Page {
                 onSelected: {
                     connect.close()
                     if (typeof connectionManager !== 'undefined') {
-                        connectionManager.messageReceived.connect(function(id, msg) {
-                            entries.append(msg)
-                        })
+                        connectionManager.messageReceived.connect(gotMessage)
                         connectionManager.fromOpts(settings.getValue("server." + item))
                     }
                 }
