@@ -45,6 +45,16 @@ Page {
         title = item.title || '?'
         spotlight.model = item.model
     }
+    function setTitle(id, title) {
+        var data = getBuffer(id)
+        if (data) {
+            data.title = title
+        }
+    }
+    Connections {
+        target: connectionManager
+        onNameChanged: setTitle(id, title)
+    }
     ListModel {
         id: entries
         Component.onCompleted: {

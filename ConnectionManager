@@ -11,6 +11,7 @@ public:
     explicit ConnectionManager(QObject *parent = nullptr);
 signals:
     void messageReceived(const QUuid id, QString bufferName, QVariantMap opts);
+    void nameChanged(const QUuid id, const QString title);
 public slots:
     void fromOpts(QVariantMap opts);
 };

@@ -39,8 +39,15 @@ void ConnectionManager::fromOpts(QVariantMap opts) {
             if (msg != nullptr)
                 emit messageReceived(bId, buffer->title(), *msg);
         });
+        connect(buffer, &IrcBuffer::titleChanged,
+                [this,bId](QString title) {
+            emit nameChanged(bId, title);
+        });
     });
+    connect(conn, &IrcConnection::displayNameChanged,
+            core, &IrcBuffer::setName);
     qDebug() << "Made connections " << id;
+    core->setName(conn->displayName());
     model->add(core);
     conn->open();
     qDebug() << "Opened connection " << id;
