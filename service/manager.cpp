@@ -1,18 +1,18 @@
 #include "manager.h"
 
-#include <IrcConnection>
-#include <IrcBufferModel>
-#include <IrcBuffer>
+#include <QUuid>
 
-Buffer* Manager::fromOpts(QVariantMap opts) {
-    auto conn = new IrcConnection(this);
-    for (auto kv: opts.toStdMap()) {
-        conn->setProperty(kv.first.toUtf8(), kv.second);
-    }
-    auto bufferModel = new IrcBufferModel(conn);
-    bufferModel->setConnection(conn);
-    auto buffer = new IrcBuffer(conn);
-    bufferModel->add(buffer);
+ConnectionManagerAndroid::ConnectionManagerAndroid(QObject* parent) : ConnectionManagerAndroidSource(parent) {
+    connect(&mManager, &ConnectionManager::nameChanged,
+            [this](const QUuid id, QString title) {
+        emit nameChanged(id, title);
+    });
+    connect(&mManager, &ConnectionManager::messageReceived,
+            [this](const QUuid id, QString title, QVariantMap msg) {
+        emit messageReceived(id, title, msg);
+    });
+}
 
-    return new Buffer(buffer, buffer);
+void ConnectionManagerAndroid::fromOpts(QVariantMap opts) {
+    mManager.fromOpts(opts);
 }

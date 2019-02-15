@@ -8,7 +8,7 @@
 #include <QtAndroid>
 #include <QAndroidService>
 #include <QRemoteObjectNode>
-#include "rep_connection_replica.h"
+#include "rep_manager_replica.h"
 #else
 #include "ConnectionManager"
 #endif
@@ -49,8 +49,8 @@ int main(int argc, char *argv[])
                                               QtAndroid::androidActivity().object());
     QRemoteObjectNode repNode;
     repNode.connectToNode(QUrl(QStringLiteral("local:switch")));
-    QScopedPointer<ConnectionManagerReplica> ptr;
-    ptr.reset(repNode.acquire<ConnectionManagerReplica>());
+    QScopedPointer<ConnectionManagerAndroidReplica> ptr;
+    ptr.reset(repNode.acquire<ConnectionManagerAndroidReplica>());
     engine.rootContext()->setContextProperty(QLatin1Literal("connectionManager"),
                                              ptr.data());
 #else

@@ -2,14 +2,14 @@
 #include <QDebug>
 #include <QRemoteObjectHost>
 
-#include "connection.h"
+#include "manager.h"
 
 int service(int argc, char** argv) {
     QAndroidService service(argc, argv);
     qDebug() << "Running Service";
 
     QRemoteObjectHost srcNode(QUrl(QStringLiteral("local:switch")));
-    ConnectionManager manager;
+    ConnectionManagerAndroid manager;
     srcNode.enableRemoting(&manager);
 
     return service.exec();

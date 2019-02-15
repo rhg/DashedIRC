@@ -39,10 +39,10 @@ android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     OTHER_FILES += android/AndroidManifest.xml       android/build.gradle
     QT += androidextras remoteobjects
-    REPC_SOURCE += service/connection.rep
-    REPC_REPLICA += service/connection.rep
-    SOURCES += service/service.cpp
-    HEADERS += service/connection.h
+    REPC_SOURCE += service/manager.rep
+    REPC_REPLICA += service/manager.rep
+    SOURCES += service/service.cpp service/manager.cpp
+    HEADERS += service/manager.h
 }
 
 ios {

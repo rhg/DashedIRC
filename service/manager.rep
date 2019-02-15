@@ -1,0 +1,7 @@
+#include <QUuid>
+
+class ConnectionManagerAndroid {
+    SLOT(fromOpts(QVariantMap opts));
+    SIGNAL(nameChanged(const QUuid id, QString title));
+    SIGNAL(messageReceived(const QUuid id, QString title, QVariantMap message));
+}

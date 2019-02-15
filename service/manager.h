@@ -1,11 +1,14 @@
 #pragma once
 
-#include "connection.h"
-#include "rep_connection_source.h"
+#include "rep_manager_source.h"
+#include "../ConnectionManager"
 
-class Manager : public ManagerSource
+class ConnectionManagerAndroid : public ConnectionManagerAndroidSource
 {
     Q_OBJECT
+    ConnectionManager mManager;
+public:
+    explicit ConnectionManagerAndroid(QObject* parent = nullptr);
 public slots:
-    Buffer* fromOpts(QVariantMap opts) override;
+    void fromOpts(QVariantMap opts) override;
 };
