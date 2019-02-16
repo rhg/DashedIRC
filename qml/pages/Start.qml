@@ -34,14 +34,15 @@ Page {
                 var c = Qt.createComponent("../models/Buffer.qml")
                 var model = c.createObject(connectionManager)
                 model.append(obj)
-                var o = {title: bufferTitle, model: model}
+                var o = {id: bId, title: bufferTitle, model: model}
                 addBuffer(bId, o)
             } else {
                 data.model.append(obj)
             }
         }
     }
-    function show(item) {
+    function show(id, item) {
+        if (id) connectionManager.setCurrentBuffer(id, item.title)
         title = item.title || '?'
         spotlight.model = item.model
     }
@@ -54,6 +55,10 @@ Page {
     Connections {
         target: connectionManager
         onNameChanged: setTitle(id, title)
+        onInvalidCommand: {
+            var o = {time: new Date(), nick: 'Dashed IRC', content: qsTr('Invalid Command')}
+            entries.append(o)
+        }
     }
     ListModel {
         id: entries
@@ -96,6 +101,12 @@ Page {
         AppTextField {
             id: commandField
             Layout.fillWidth: true
+            onAccepted: {
+                if (text) {
+                    connectionManager.sendCommand(text)
+                    text = ""
+                }
+            }
         }
     }
     AppDrawer {
@@ -112,7 +123,7 @@ Page {
             model: getBufferData()
             delegate: SimpleRow {
                 text: item.title || "?"
-                onSelected: show(item)
+                onSelected: show(item.id, item)
             }
         }
     }

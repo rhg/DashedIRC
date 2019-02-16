@@ -13,7 +13,29 @@
 
 ConnectionManager::ConnectionManager(QObject *parent) : QObject(parent)
 {
+    mParser.setTriggers(QStringList() << "/");
+    mParser.setChannels(QStringList());
+    mParser.addCommand(IrcCommand::Join, "JOIN <#channel> (<key>)");
+}
 
+void ConnectionManager::sendCommand(QString text) {
+    auto cmd = mParser.parse(text);
+    if (cmd == nullptr) {
+        if (text.startsWith("//")) {
+            cmd = IrcCommand::createMessage(mParser.target(), text);
+        } else if (text.startsWith("/")) {
+            emit invalidCommand();
+            return;
+        } else {
+            cmd = IrcCommand::createMessage(mParser.target(), text);
+        }
+    }
+    mBuffers[mCurrentBuffer]->sendCommand(cmd);
+}
+
+void ConnectionManager::setCurrentBuffer(const QUuid bId, QString name) {
+    mParser.setTarget(name);
+    mCurrentBuffer = bId;
 }
 
 void ConnectionManager::fromOpts(QVariantMap opts) {
@@ -34,6 +56,9 @@ void ConnectionManager::fromOpts(QVariantMap opts) {
     connect(model, &IrcBufferModel::added,
             [this](IrcBuffer* buffer) {
         auto bId = QUuid::createUuid();
+        mBuffers.insert(bId, buffer);
+        if (buffer->isChannel())
+            mParser.setChannels(mParser.channels() << buffer->title());
         connect(buffer, &IrcBuffer::messageReceived,
                 [this,buffer,bId](IrcMessage* message) {
             auto msg = Messages::parseMessage(message);
@@ -56,4 +81,5 @@ void ConnectionManager::fromOpts(QVariantMap opts) {
     model->add(core);
     conn->open();
     qDebug() << "Opened connection " << id;
+    mConnections.insert(id, conn);
 }

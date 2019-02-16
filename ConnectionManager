@@ -4,14 +4,25 @@
 #include <QVariantMap>
 #include <QUuid>
 
+#include <IrcCommandParser>
+
+class IrcBuffer;
+
 class ConnectionManager : public QObject
 {
      Q_OBJECT
+    QMap<QUuid, IrcBuffer*> mBuffers;
+    QMap<QUuid, IrcConnection*> mConnections;
+    QUuid mCurrentBuffer;
+    IrcCommandParser mParser;
 public:
     explicit ConnectionManager(QObject *parent = nullptr);
 signals:
     void messageReceived(const QUuid id, QString bufferName, QVariantMap opts);
     void nameChanged(const QUuid id, const QString title);
+    void invalidCommand();
 public slots:
     void fromOpts(QVariantMap opts);
+    void setCurrentBuffer(const QUuid bId, QString name);
+    void sendCommand(QString text);
 };
