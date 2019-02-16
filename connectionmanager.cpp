@@ -9,6 +9,7 @@
 #include <IrcBuffer>
 #include <IrcBufferModel>
 #include <IrcMessage>
+#include <IrcCommand>
 
 ConnectionManager::ConnectionManager(QObject *parent) : QObject(parent)
 {
@@ -46,6 +47,10 @@ void ConnectionManager::fromOpts(QVariantMap opts) {
     });
     connect(conn, &IrcConnection::displayNameChanged,
             core, &IrcBuffer::setName);
+    connect(conn, &IrcConnection::connected,
+            [conn]() {
+        conn->sendCommand(IrcCommand::createCapability("REQ", "server-time"));
+    });
     qDebug() << "Made connections " << id;
     core->setName(conn->displayName());
     model->add(core);
