@@ -24,7 +24,7 @@ QVariantMap* Messages::parseMessage(IrcMessage* message) {
     switch (message->type()) {
     case IrcMessage::Capability: {
         auto msg = reinterpret_cast<IrcCapabilityMessage*>(message);
-        content = msg->subCommand() + " " + msg->capabilities().join('\n');
+        content = msg->subCommand() + " " + msg->capabilities().join(' ');
         break;
     }
     case IrcMessage::Numeric: {
@@ -32,6 +32,31 @@ QVariantMap* Messages::parseMessage(IrcMessage* message) {
         if (!msg->isComposed()) {
             content = parseNumeric(msg);
         }
+        break;
+    }
+    case IrcMessage::Motd: {
+        auto msg = reinterpret_cast<IrcMotdMessage*>(message);
+        content = msg->lines().join('\n');
+        break;
+    }
+    case IrcMessage::Mode: {
+        auto msg = reinterpret_cast<IrcModeMessage*>(message);
+        content = msg->target() + " = " + msg->mode();
+        break;
+    }
+    case IrcMessage::Topic: {
+        auto msg = reinterpret_cast<IrcTopicMessage*>(message);
+        content = "Topic is '" + msg->topic() + "'";
+        break;
+    }
+    case IrcMessage::Private: {
+        auto msg = reinterpret_cast<IrcPrivateMessage*>(message);
+        content = msg->content();
+        break;
+    }
+    case IrcMessage::Notice: {
+        auto msg = reinterpret_cast<IrcNoticeMessage*>(message);
+        content = "!" + msg->content();
         break;
     }
     default:
