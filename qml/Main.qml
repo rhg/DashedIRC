@@ -18,6 +18,15 @@ App {
     Component.onCompleted: updateServers()
     property var buffers: ({})
     property var servers
+    function addServer(name) {
+        if (servers.find(function(el) { return el === name })) {
+            return
+        } else {
+            servers.push(name)
+            settings.setValue('servers', servers)
+            serversChanged()
+        }
+    }
     function updateServers() {
         servers = settings.getValue('servers') || []
     }

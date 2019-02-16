@@ -66,7 +66,8 @@ DISTFILES += \
     qml/pages/Server.qml \
     android/src/com/rhg135/dashedirc/Colors.java \
     android/src/com/rhg135/dashedirc/Service.java \
-    qml/models/Buffer.qml
+    qml/models/Buffer.qml \
+    qml/pages/Import.qml
 
 HEADERS += \
     messages.h \
