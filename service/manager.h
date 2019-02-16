@@ -11,4 +11,6 @@ public:
     explicit ConnectionManagerAndroid(QObject* parent = nullptr);
 public slots:
     void fromOpts(QVariantMap opts) override;
+    void setCurrentBuffer(const QUuid bId) override;
+    void sendCommand(const QString text) override;
 };

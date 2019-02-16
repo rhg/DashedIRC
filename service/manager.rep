@@ -2,6 +2,9 @@
 
 class ConnectionManagerAndroid {
     SLOT(fromOpts(QVariantMap opts));
+    SLOT(setCurrentBuffer(const QUuid bId));
+    SLOT(sendCommand(const QString text));
+    SIGNAL(invalidCommand());
     SIGNAL(nameChanged(const QUuid id, QString title));
     SIGNAL(messageReceived(const QUuid id, QString title, QVariantMap message));
 }

@@ -18,7 +18,7 @@ ConnectionManager::ConnectionManager(QObject *parent) : QObject(parent)
     mParser.addCommand(IrcCommand::Join, "JOIN <#channel> (<key>)");
 }
 
-void ConnectionManager::sendCommand(QString text) {
+void ConnectionManager::sendCommand(const QString text) {
     auto cmd = mParser.parse(text);
     if (cmd == nullptr) {
         if (text.startsWith("//")) {
@@ -33,8 +33,8 @@ void ConnectionManager::sendCommand(QString text) {
     mBuffers[mCurrentBuffer]->sendCommand(cmd);
 }
 
-void ConnectionManager::setCurrentBuffer(const QUuid bId, QString name) {
-    mParser.setTarget(name);
+void ConnectionManager::setCurrentBuffer(const QUuid bId) {
+    mParser.setTarget(mBuffers[bId]->title());
     mCurrentBuffer = bId;
 }
 

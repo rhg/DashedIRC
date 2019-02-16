@@ -23,6 +23,6 @@ signals:
     void invalidCommand();
 public slots:
     void fromOpts(QVariantMap opts);
-    void setCurrentBuffer(const QUuid bId, QString name);
-    void sendCommand(QString text);
+    void setCurrentBuffer(const QUuid bId);
+    void sendCommand(const QString text);
 };

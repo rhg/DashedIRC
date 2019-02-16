@@ -42,7 +42,7 @@ Page {
         }
     }
     function show(id, item) {
-        if (id) connectionManager.setCurrentBuffer(id, item.title)
+        if (id) connectionManager.setCurrentBuffer(id)
         title = item.title || '?'
         spotlight.model = item.model
     }
@@ -166,6 +166,7 @@ Page {
                 onSelected: {
                     connect.close()
                     if (typeof connectionManager !== 'undefined') {
+                        // var sId = Uuid.create()
                         connectionManager.messageReceived.connect(gotMessage)
                         connectionManager.fromOpts(settings.getValue("server." + item))
                     }
