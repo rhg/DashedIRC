@@ -8,7 +8,7 @@ CONFIG += v-play
 CONFIG += v-play-live
 
 # configure the bundle identifier for iOS
-PRODUCT_IDENTIFIER = cam.rhg135.dashedirc
+PRODUCT_IDENTIFIER = com.rhg135.dashedirc
 
 qmlFolder.source = qml
 DEPLOYMENTFOLDERS += qmlFolder # comment for publishing

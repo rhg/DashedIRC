@@ -43,7 +43,7 @@ android {
     compileSdkVersion androidCompileSdkVersion.toInteger()
     buildToolsVersion androidBuildToolsVersion
 
-    defaultConfig.applicationId = 'cam.rhg135.dashedirc'
+    defaultConfig.applicationId = 'com.rhg135.dashedirc'
 
     sourceSets {
         main {

@@ -1,8 +1,8 @@
 {
     "title": "Dashed IRC",
-    "identifier": "cam.rhg135.dashedirc",
+    "identifier": "com.rhg135.dashedirc",
     "orientation": "auto",
-    "versioncode": 1,
-    "versionname": "1.0",
+    "versioncode": 3,
+    "versionname": "0.3",
     "stage": "test"
 }
