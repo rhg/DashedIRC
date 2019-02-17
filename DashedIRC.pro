@@ -45,19 +45,19 @@ android {
     HEADERS += service/manager.h
 }
 
-ios {
-    QMAKE_INFO_PLIST = ios/Project-Info.plist
-    OTHER_FILES += $$QMAKE_INFO_PLIST
+#ios {
+#    QMAKE_INFO_PLIST = ios/Project-Info.plist
+#    OTHER_FILES += $$QMAKE_INFO_PLIST
     
-}
+#}
 
 # set application icons for win and macx
 win32 {
     RC_FILE += win/app_icon.rc
 }
-macx {
-    ICON = macx/app_icon.icns
-}
+#macx {
+#    ICON = macx/app_icon.icns
+#}
 
 DISTFILES += \
     qml/pages/Start.qml \
