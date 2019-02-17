@@ -1,5 +1,12 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml</file>
+        <file>qml/pages/Import.qml</file>
+        <file>qml/pages/Server.qml</file>
+        <file>qml/pages/Servers.qml</file>
+        <file>qml/pages/Settings.qml</file>
+        <file>qml/pages/Start.qml</file>
+        <file>qml/models/Buffer.qml</file>
+        <file>qml/config.json</file>
+        <file>qml/Main.qml</file>
     </qresource>
 </RCC>

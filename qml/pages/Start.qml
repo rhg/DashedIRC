@@ -141,7 +141,7 @@ Page {
                 Layout.alignment: Qt.AlignRight
             }
             AppText {
-                text: '0.3.0-git'
+                text: '0.3.0'
             }
             AppText {
                 text: qsTr('Founder:')
