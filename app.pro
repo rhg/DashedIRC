@@ -1,4 +1,4 @@
-include(../../../libcommuni/src/src.pri)
+include(../libs/libcommuni/src/src.pri)
 
 # allows to add DEPLOYMENTFOLDERS and links to the V-Play library and QtCreator auto-completion
 CONFIG += v-play
